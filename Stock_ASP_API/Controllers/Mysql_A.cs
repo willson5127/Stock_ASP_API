@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace Stock_ASP_API.Models
+namespace Stock_ASP_API
 {
     public class Mysql_A
     {

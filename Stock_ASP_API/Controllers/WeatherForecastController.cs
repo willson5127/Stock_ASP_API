@@ -77,7 +77,7 @@ namespace Stock_ASP_API.Controllers
             string lestdate = result.data[result.data.GetLength(0) - 1, 0];     //["日期","成交股數","成交金額","開盤價","最高價","最低價","收盤價","漲跌價差","成交筆數"]
 
             //資料庫工作
-            Models.Mysql_A sqla = new Models.Mysql_A();
+            Mysql_A sqla = new Mysql_A();
             string commend;
             string[] rowname = new string[] { "Date" };
             commend = "SELECT stocks.Date FROM orders JOIN stocks ON stocks.S_id = 2330 WHERE orders.S_id = 2330;";

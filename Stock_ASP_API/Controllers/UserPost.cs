@@ -10,7 +10,7 @@ namespace Stock_ASP_API.Controllers
 {
     public class UserPost
     {
-        Models.Mysql_A sqlb = new Models.Mysql_A();
+        Mysql_A sqlb = new Mysql_A();
         WebGrabber wg = new WebGrabber();
         DateTime Date = DateTime.Now;
 
