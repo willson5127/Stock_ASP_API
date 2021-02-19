@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace Stock_ASP_API.Controllers
+namespace Stock_ASP_API.Models
 {
     public class Mysql_A
     {
@@ -21,12 +21,28 @@ namespace Stock_ASP_API.Controllers
             if (conn.State != ConnectionState.Open)
                 conn.Open();
         }
+        public List<string> Select(string commend)
+        {
+            //string result = "error";
+            List<string> list = new List<string>(); 
+            cmd = new MySqlCommand(@commend, conn);
+            MySqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                if (!dr[0].Equals(DBNull.Value))
+                {
+                    list.Add(dr["S_id"].ToString());
+                }
+            }
+            dr.Close();
+            return list;
+        }
         /// <summary>
         /// SELECT讀取資料庫
         /// </summary>
         /// <param name="commend">SQL指令</param>
         /// <returns></returns>
-        public string Select(string commend)
+        public string Select(string commend, string rowname)
         {
             string result = "error";
             cmd = new MySqlCommand(@commend, conn);
@@ -35,7 +51,7 @@ namespace Stock_ASP_API.Controllers
             {
                 if (!dr[0].Equals(DBNull.Value))
                 {
-                    result = dr["Date"].ToString();
+                    result = dr[rowname].ToString();
                 }
             }
             dr.Close();
@@ -60,7 +76,7 @@ namespace Stock_ASP_API.Controllers
                     for(int i = 0; i < rowname.Length; i++)
                     {
                         tmp += dr[rowname[i]].ToString();
-                        if (i != rowname.Length - 1) tmp += ",";
+                        if (i != rowname.Length - 1) tmp += ",\t";
 
                     }                    
                 }
@@ -75,7 +91,7 @@ namespace Stock_ASP_API.Controllers
         /// </summary>
         /// <param name="commend">SQL指令</param>
         /// <returns></returns>
-        public int Update(string commend)
+        public int DataProcess(string commend)
         {
             cmd = new MySqlCommand(@commend, conn);
             return cmd.ExecuteNonQuery();

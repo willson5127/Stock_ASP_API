@@ -27,20 +27,26 @@ namespace Stock_ASP_API.Controllers
             public string action { get; set; }
             public string username { get; set; }
             public string password { get; set; }
+            public string stock { get; set; }
         }
         int i = 0;
 
+        
         [Route("Usercommit")]
         [HttpPost]
         public string FirstSample([FromBody] Userpost d)
         {
+            UserPost up = new UserPost();
             switch (d.action)
             {
                 case "register":
-                    
-                    return d.username + d.password;
+                    return up.Register(d.username, d.password);
                 case "login":
-                    return d.username + d.password;
+                    return up.Login(d.username, d.password);
+                case "add stock":
+                    return up.AddOrder(d.stock, d.username, d.password);
+                case "search order":
+                    return up.SearchOrder(d.username, d.password);
                 default:
                     return "Error, out of case!";
             }
@@ -71,7 +77,7 @@ namespace Stock_ASP_API.Controllers
             string lestdate = result.data[result.data.GetLength(0) - 1, 0];     //["日期","成交股數","成交金額","開盤價","最高價","最低價","收盤價","漲跌價差","成交筆數"]
 
             //資料庫工作
-            Mysql_A sqla = new Mysql_A();
+            Models.Mysql_A sqla = new Models.Mysql_A();
             string commend;
             string[] rowname = new string[] { "Date" };
             commend = "SELECT stocks.Date FROM orders JOIN stocks ON stocks.S_id = 2330 WHERE orders.S_id = 2330;";
@@ -83,10 +89,10 @@ namespace Stock_ASP_API.Controllers
                     "', Rang='" + result.data[result.data.GetLength(0) - 1, 7] + "', Vol='" + result.data[result.data.GetLength(0) - 1, 8] +
                     "', Vol_unit='" + result.data[result.data.GetLength(0) - 1, 1] + "', Vol_price='" + result.data[result.data.GetLength(0) - 1, 2] +
                     "', Date='" + result.data[result.data.GetLength(0) - 1, 0] + "' WHERE S_id='2330';";
-                int n = sqla.Update(commend);
+                int n = sqla.DataProcess(commend);
             }
             commend = @"SELECT customers.User, stocks.S_id, stocks.S_name, stocks.End_price FROM orders JOIN customers ON orders.C_id = customers.C_id JOIN stocks ON orders.S_id = stocks.S_id;";
-            rowname = new string[] { "User" , "S_id" , "S_name" , "End_price" };
+            rowname = new string[]  { "User" , "S_id" , "S_name" , "End_price"};
             string finalresult = sqla.Select(commend, rowname, true);
             sqla.close();
             return finalresult;
