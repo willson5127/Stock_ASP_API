@@ -175,7 +175,7 @@ namespace Stock_ASP_API.Controllers
         public string SQL()
         {
             //MySQL登入
-            string connString = "server=127.0.0.1;port=3306;user id=root;password=5!2751@7Qp;database=StockAPP;charset=utf8;";
+            string connString = "server=127.0.0.1;port=3306;user id=root;password=1234;database=StockAPP;charset=utf8;";
             MySqlConnection conn = new MySqlConnection();
             conn.ConnectionString = connString;
             if (conn.State != ConnectionState.Open)

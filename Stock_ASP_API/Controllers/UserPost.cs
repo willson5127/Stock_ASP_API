@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace Stock_ASP_API.Controllers
 {
@@ -99,6 +100,7 @@ namespace Stock_ASP_API.Controllers
                     WebRequest HttpWReq = WebRequest.Create(@"https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=" + date + "&stockNo=" + list[i] + "");
                     HttpWReq.Method = "GET";
                     WebResponse myResponse = HttpWReq.GetResponse();
+                    Thread.Sleep(3000);
                     StreamReader sr = new StreamReader(myResponse.GetResponseStream());
                     string json = sr.ReadToEnd();
                     sr.Close();

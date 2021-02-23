@@ -92,3 +92,31 @@ CREATE TABLE orderss(
 INSERT INTO users VALUES(1, 'Blueberry');
 INSERT INTO orderss VALUES(1, 1, 'phone', 20000);
 SELECT * FROM orderss;
+
+CREATE DATABASE MemberSys;
+USE MemberSys;
+SHOW TABLES;
+CREATE TABLE IF NOT EXISTS `MemberSys`.`Usertable` (
+  `User_ID` INT NOT NULL auto_increment,
+  `Username` VARCHAR(45) NOT NULL UNIQUE,
+  `Password` VARCHAR(45) NOT NULL,
+  `Realname` VARCHAR(45) NOT NULL,
+  `Birthday` VARCHAR(45) NOT NULL,
+  `Email` VARCHAR(45) NOT NULL,
+  `Buildday` VARCHAR(45) NOT NULL,
+  `Authority` INT NOT NULL,
+  PRIMARY KEY (`User_ID`))
+ENGINE = InnoDB;
+DESCRIBE Usertable;
+DROP TABLE Usertable;
+INSERT INTO MemberSys.Usertable VALUES(0, 'root', '1234', 'god', '0/1/1', 'god@gmail.com', '2021/2/21', '3');
+INSERT INTO MemberSys.Usertable VALUES(0, 'tar', '1234', 'god', '0/1/1', 'god@gmail.com', '2021/2/21', '2');
+SELECT * FROM MemberSys.Usertable;
+SELECT Username, Password FROM MemberSys.Usertable WHERE Username = 'root';
+SELECT User_ID FROM MemberSys.Usertable WHERE Username = 'root';
+SELECT Username FROM MemberSys.Usertable WHERE User_ID = 1;
+SELECT Username, Authority FROM MemberSys.Usertable;
+UPDATE MemberSys.Usertable SET Realname= 'good', Birthday= '1/1/1' , Email= 'good@mail.com' WHERE Username='root';
+UPDATE MemberSys.Usertable SET Password= '1245' WHERE Username='root';
+UPDATE MemberSys.Usertable SET Authority= 3 WHERE Username='root';
+UPDATE MemberSys.Usertable SET Authority= '2' WHERE Username='1';

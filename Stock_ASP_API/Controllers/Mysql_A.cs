@@ -9,7 +9,7 @@ namespace Stock_ASP_API
 {
     public class Mysql_A
     {
-        private string connString = "server=127.0.0.1;port=3306;user id=root;password=5!2751@7Qp;database=StockAPP;charset=utf8;";
+        private string connString = "server=127.0.0.1;port=3306;user id=root;password=1234 ;database=StockAPP;charset=utf8;";
         private MySqlConnection conn = new MySqlConnection();
         MySqlCommand cmd = new MySqlCommand();
         /// <summary>
@@ -31,7 +31,7 @@ namespace Stock_ASP_API
             {
                 if (!dr[0].Equals(DBNull.Value))
                 {
-                    list.Add(dr["S_id"].ToString());
+                    for(int i = 0; i < dr.FieldCount; i++) list.Add(dr[i].ToString());
                 }
             }
             dr.Close();
